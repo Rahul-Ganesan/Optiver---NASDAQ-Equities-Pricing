@@ -51,6 +51,7 @@ This approach leverages the sequential learning capacity of GRUs and the predict
 Best Result with GRU_XGBoost - RMSE ~ 7.8
 
 🧠 Requirements
-'''
+
+```bash
 pip install numpy pandas scikit-learn lightgbm xgboost catboost torch
-'''
+```
