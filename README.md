@@ -1,34 +1,53 @@
 # Optiver---NASDAQ-Equities-Pricing
+GRU + XGBoost for Optiver Trading Forecasting
 
-Model Comparison for Optiver Volatility Prediction
-🧠 Overview
+This repository explores a series of machine learning and deep learning models for predicting price movement (target) in the Optiver Trading at the Close dataset. It includes experiments with gradient boosting models, a GRU-based neural network, and a hybrid GRU–XGBoost architecture.
 
-This project experiments with multiple gradient boosting methods for predicting financial metrics (e.g., realized volatility) using the Optiver dataset. It includes feature engineering, model training, and performance comparison.
+📘 Overview
 
-🚀 Methods Tested
+The notebook tests and compares several modeling strategies for time-series financial data:
 
-Three state-of-the-art gradient boosting models were benchmarked:
+Model	Description	Notes
+LightGBM	Gradient boosting using leaf-wise trees	Fast, efficient baseline
+XGBoost	Boosted decision trees	Robust, handles tabular features well
+CatBoost	Categorical boosting	Minimal preprocessing
+GRU	Gated Recurrent Unit network	Captures temporal patterns
+GRU + XGBoost	Hybrid approach	GRU encodes sequence → XGBoost predicts target
 
-LightGBM, XGBoost, CatBoost, Hybrid GRU-XGBoost
+🧩 Data Preparation
 
-Each model was trained on the same processed dataset, allowing direct comparison of performance metrics.
+Load data from optiver-trading-at-the-close.zip
 
-🧩 Feature Engineering
-
-Features included:
+Create engineered features:
 
 Bid-ask spread: ask_price - bid_price
 
-Signed order imbalance: imbalance_size * imbalance_buy_sell_flag
+Imbalance signed: imbalance_size * imbalance_buy_sell_flag
 
-Lagged features: 1-step lag per stock to capture temporal effects
+Lagged features: wap_lag1, target_lag1
 
-Aggregations: Mean, std, and percentile-based summaries by stock_id
+Split data by time (no shuffle)
 
-⚙️ Model Training
+⚙️ Training and Evaluation
 
-Data split into train/test sets by stock_id or time-based splits.
+Metric: Mean Squared Error (MSE)
 
-Standardized training pipeline across models for fair comparison.
+Validation: 80/20 time-based split
 
-Metrics: RMSE (Root Mean Squared Error) and R².
+Comparison: Evaluate performance across models
+
+🚀 Hybrid Model: GRU + XGBoost
+
+The hybrid model combines:
+
+GRU encoder: learns temporal embeddings of trading features.
+
+XGBoost regressor: predicts target values from GRU-derived representations.
+
+This approach leverages the sequential learning capacity of GRUs and the predictive strength of tree ensembles.
+
+📈 Results (Example)
+Best Result with GRU_XGBoost - RMSE ~ 7.8
+
+🧠 Requirements
+pip install numpy pandas scikit-learn lightgbm xgboost catboost torch
