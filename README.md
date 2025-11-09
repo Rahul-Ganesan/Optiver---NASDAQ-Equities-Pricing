@@ -47,7 +47,10 @@ XGBoost regressor: predicts target values from GRU-derived representations.
 This approach leverages the sequential learning capacity of GRUs and the predictive strength of tree ensembles.
 
 📈 Results (Example)
+
 Best Result with GRU_XGBoost - RMSE ~ 7.8
 
 🧠 Requirements
+'''
 pip install numpy pandas scikit-learn lightgbm xgboost catboost torch
+'''
